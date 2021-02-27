@@ -9,46 +9,24 @@ const audioK = new Audio('sounds/tom.wav');
 const audioL = new Audio('sounds/tink.wav');
 
 
-const aKey = document.getElementById('A');
 
 
-document.addEventListener('keydown', function(event) {
+window.addEventListener('keydown', function(event) {
 
-    if (event.key === 'a') {
-        audioA.currentTime = 0;
-        audioA.play();
-    }
-    else if (event.key === 's') {
-        audioS.currentTime = 0;
-        audioS.play();
-    }
-    else if (event.key === 'd') {
-        audioD.currentTime = 0;
-        audioD.play();
-    }
-    else if (event.key === 'f') {
-        audioF.currentTime = 0;
-        audioF.play();
-    }
-    else if (event.key === 'g') {
-        audioG.currentTime = 0;
-        audioG.play();
-    }
-    else if (event.key === 'h') {
-        audioH.currentTime = 0;
-        audioH.play();
-    }
-    else if (event.key === 'j') {
-        audioJ.currentTime = 0;
-        audioJ.play();
-    }
-    else if (event.key === 'k') {
-        audioK.currentTime = 0;
-        audioK.play();
-    }
-    else if (event.key === 'l') {
-        audioL.currentTime = 0;
-        audioL.play();
-    }
+    const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+    const key = document.querySelector(`[data-key="${event.keyCode}"]`);
+    if (!audio) return;
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.add('playing');
+
+    const keys = document.querySelectorAll('.key');
+    
+    keys.forEach(function(key) {
+        key.addEventListener('transitionend', function(event){
+            if (event.propertyName !== 'transform') return;
+            this.classList.remove('playing');
+        })
+    })
     
 })
